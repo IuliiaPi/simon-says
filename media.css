@@ -1,0 +1,34 @@
+@media screen and (max-width: 768px) {
+
+    .page__container {
+        max-width: 768px;
+        padding: 20px 10px;
+    }
+
+    .title {
+        font-size: 30px;
+    }
+
+}
+
+@media screen and (max-width: 380px) {
+
+    .page__container {
+        max-width: 360px;
+        padding: 10px 6px;
+    }
+
+    .title {
+        font-size: 29px;
+    }
+
+    .block-buttons {
+        gap: 20px;
+    }
+
+    .input-textarea {
+        padding: 10px;   
+        font-size: 50px;
+    }
+
+}
