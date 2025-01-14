@@ -101,17 +101,17 @@ textarea.addEventListener('input', (e) => {
 //     elem.value = numVal;
 // }
 
-// let randomNumber1 = getRandomNumber(10, 99);
-// let randomNumber2 = getRandomNumber(10, 99);
-// let randomNumber3 = getRandomNumber(10, 99);
-// let randomNumber4 = getRandomNumber(10, 99);
-// let randomNumber5 = getRandomNumber(10, 99);
+let randomNumber1 = getRandomNumber(10, 99);
+let randomNumber2 = getRandomNumber(10, 99);
+let randomNumber3 = getRandomNumber(10, 99);
+let randomNumber4 = getRandomNumber(10, 99);
+let randomNumber5 = getRandomNumber(10, 99);
 
-let randomNumber1 = getRandomNumber(1, 1);
-let randomNumber2 = getRandomNumber(1, 1);
-let randomNumber3 = getRandomNumber(1, 1);
-let randomNumber4 = getRandomNumber(1, 1);
-let randomNumber5 = getRandomNumber(1, 1);
+// let randomNumber1 = getRandomNumber(1, 1);
+// let randomNumber2 = getRandomNumber(1, 1);
+// let randomNumber3 = getRandomNumber(1, 1);
+// let randomNumber4 = getRandomNumber(1, 1);
+// let randomNumber5 = getRandomNumber(1, 1);
 
 // section Buttons Footer
 
@@ -154,7 +154,7 @@ keyboardData1.forEach((row) => {
 
             if (textarea.innerHTML === textarea.placeholder) {
                 buttonRepeat.innerHTML = 'Next';
-                // buttonRepeat.removeAttribute('disabled', '');
+                buttonRepeat.removeAttribute('disabled', '');
                 buttonRepeat.classList.remove('disabled');
             }
         });
@@ -186,6 +186,40 @@ function displayLevels() {
 displayLevels();
 
 const popupLevelListItems = popupLevelList.querySelectorAll('.popup-level__list-item');
+
+// popup Game Over
+
+const popup = document.createElement('div');
+popup.className = 'popup';
+document.body.append(popup);
+
+const popupContainer = document.createElement('div');
+popupContainer.className = 'popup__container';
+popup.append(popupContainer);
+
+const popupContent = document.createElement('div');
+popupContent.className = 'popup__content';
+popupContainer.append(popupContent);
+
+const popupTitle = document.createElement('p');
+popupTitle.className = 'popup__title';
+popupTitle.innerHTML = 'Game Over!!';
+popupContent.append(popupTitle);
+
+const popupSubtitle = document.createElement('p');
+popupSubtitle.className = 'popup__subtitle';
+popupContent.append(popupSubtitle);
+
+const buttonClosePopup = document.createElement('button');
+buttonClosePopup.className = 'btn popup__button button-x';
+buttonClosePopup.setAttribute('type', 'button');
+buttonClosePopup.innerHTML = 'x';
+popupContent.append(buttonClosePopup);
+
+buttonClosePopup.addEventListener('click', () => {
+    popup.classList.remove('_active');
+    document.body.classList.remove('_lock');
+});
 
 // button Levels 
 
@@ -283,11 +317,11 @@ buttonStart.addEventListener("click", () => {
 
 buttonRepeat.addEventListener('click', () => {
     //  buttonRepeat.removeAttribute('disabled', '');
-    //     buttonRepeat.classList.remove('disabled');
+        // buttonRepeat.classList.remove('disabled');
 
     if (buttonRepeat.innerHTML === 'Repeat the sequence') {
 
-        // buttonRepeat.setAttribute('disabled', '');
+        buttonRepeat.setAttribute('disabled', '');
         buttonRepeat.classList.add('disabled');
 
         textarea.innerHTML = '';
@@ -303,21 +337,33 @@ buttonRepeat.addEventListener('click', () => {
         }
         if (roundsCounterScore.innerText === '5') {
             textarea.placeholder = `${randomNumber1}${randomNumber2}${randomNumber3}${randomNumber4}${randomNumber5}`;
+
+            // if (textarea.innerHTML === `${randomNumber1}${randomNumber2}${randomNumber3}${randomNumber4}${randomNumber5}`) {
+            //     buttonRepeat.classList.add('hidden');
+            //     roundsCounterScore.innerText = '';
+            //     popup.classList.add('_active');
+            //     document.body.classList.add('_lock');
+            // }
         }
     }
 
     if (buttonRepeat.innerHTML === 'Next') {
         roundsCounterScore.innerText++;
-        buttonRepeat.innerHTML = 'Repeat the sequence';
-
-        if (buttonRepeat.innerHTML === 'Repeat the sequence') {
-
-            // buttonRepeat.removeAttribute('disabled', '');
-            buttonRepeat.classList.remove('disabled');
-        }
 
         // buttonRepeat.removeAttribute('disabled', '');
         // buttonRepeat.classList.remove('disabled');
+
+        buttonRepeat.innerHTML = 'Repeat the sequence';
+
+        // buttonRepeat.removeAttribute('disabled', '');
+        // buttonRepeat.classList.remove('disabled');
+
+        if (buttonRepeat.innerHTML === 'Repeat the sequence') {
+
+            buttonRepeat.removeAttribute('disabled', '');
+            buttonRepeat.classList.remove('disabled');
+        }
+
         textarea.innerHTML = '';
         textarea.placeholder = `${randomNumber1}${randomNumber2}`;
         if (roundsCounterScore.innerText === '3') {
@@ -329,13 +375,21 @@ buttonRepeat.addEventListener('click', () => {
         if (roundsCounterScore.innerText === '5') {
             textarea.placeholder = `${randomNumber1}${randomNumber2}${randomNumber3}${randomNumber4}${randomNumber5}`;
 
-            if (textarea.innerHTML === textarea.placeholder) {
-                buttonRepeat.classList.add('hidden');
-                roundsCounterScore.innerText = '5';
-            }
+            // if (textarea.innerHTML === `${randomNumber1}${randomNumber2}${randomNumber3}${randomNumber4}${randomNumber5}`) {
+            //     buttonRepeat.classList.add('hidden');
+            //     roundsCounterScore.innerText = '';
+            //     popup.classList.add('_active');
+            //     document.body.classList.add('_lock');
+            // }
         }
     }
 });
+
+// if ((roundsCounterScore.innerText === '5') &&
+//     (textarea.placeholder === 'randomNumber1 randomNumber2 randomNumber3 randomNumber4 randomNumber5')) {
+//         popup.classList.add('_active');
+//         document.body.classList.add('_lock');
+//     }
 
 // button New Game 
 
