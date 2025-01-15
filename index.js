@@ -149,9 +149,9 @@ keyboardData1.forEach((row) => {
         rows.append(buttonKey);
 
         buttonKey.addEventListener('click', () => {
-            textarea.innerText += buttonKey.innerText;
+            textarea.innerHTML += buttonKey.innerText;
 
-            if (textarea.innerText === textarea.placeholder) {
+            if (textarea.innerHTML === textarea.placeholder) {
                 buttonRepeat.innerText = 'Next';
                 buttonRepeat.removeAttribute('disabled', '');
                 buttonRepeat.classList.remove('disabled');
@@ -292,9 +292,9 @@ popupLevelListItems.forEach(level => {
                     rows.append(buttonKey);
 
                     buttonKey.addEventListener('click', () => {
-                        textarea.innerText += buttonKey.innerText;
+                        textarea.innerHTML += buttonKey.innerText;
 
-                        if (textarea.innerText === textarea.placeholder) {
+                        if (textarea.innerHTML === textarea.placeholder) {
                             buttonRepeat.innerText = 'Next';
                             buttonRepeat.removeAttribute('disabled', '');
                             buttonRepeat.classList.remove('disabled');
@@ -327,9 +327,9 @@ popupLevelListItems.forEach(level => {
                     rows.append(buttonKey);
 
                     buttonKey.addEventListener('click', () => {
-                        textarea.innerText += buttonKey.innerText;
+                        textarea.innerHTML += buttonKey.innerText;
 
-                        if (textarea.innerText === textarea.placeholder) {
+                        if (textarea.innerHTML === textarea.placeholder) {
                             buttonRepeat.innerText = 'Next';
                             buttonRepeat.removeAttribute('disabled', '');
                             buttonRepeat.classList.remove('disabled');
@@ -361,7 +361,7 @@ popupLevelListItems.forEach(level => {
                     rows.append(buttonKey);
 
                     buttonKey.addEventListener('click', () => {
-                        textarea.innerText += buttonKey.innerText;
+                        textarea.innerHTML += buttonKey.innerText;
 
                         if (textarea.innerHTML === textarea.placeholder) {
                             buttonRepeat.innerText = 'Next';
