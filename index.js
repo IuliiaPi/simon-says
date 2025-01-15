@@ -14,7 +14,7 @@ pageContent.className = 'page__content';
 pageContainer.append(pageContent);
 
 const title = document.createElement('h1');
-title.innerHTML = 'Welcome to Simon Says';
+title.innerText = 'Welcome to Simon Says';
 title.className = 'title';
 pageContent.append(title);
 
@@ -26,11 +26,11 @@ pageContent.append(sectionButtonsHeader);
 
 const buttonLevels = document.createElement('button');
 buttonLevels.className = 'btn block-button button-level';
-buttonLevels.innerHTML = 'Levels';
+buttonLevels.innerText = 'Levels';
 
 const buttonStart = document.createElement('button');
 buttonStart.className = 'btn block-button button-start';
-buttonStart.innerHTML = 'Start';
+buttonStart.innerText = 'Start';
 
 sectionButtonsHeader.append(buttonLevels, buttonStart);
 
@@ -86,32 +86,31 @@ blockInput.append(textarea);
 textarea.focus();
 // textarea.addEventListener('blur', () => textarea.focus());
 
-textarea.addEventListener('input', (e) => {
-    const value = e.target.value;
-    const onlyNumbers = value.replace(/[^0-9]/g, '');
-
-    if (onlyNumbers !== value) {
-        e.target.value = onlyNumbers;
-    }
-});
-
-// function validateValue(elem) {
-//     const value = elem.value;
-//     const numVal = value.replace(/[^\d\n]+/g, "");
-//     elem.value = numVal;
-// }
+validateOnlyNumbers();
 
 let randomNumber1 = getRandomNumber(10, 99);
-let randomNumber2 = getRandomNumber(10, 99);
-let randomNumber3 = getRandomNumber(10, 99);
-let randomNumber4 = getRandomNumber(10, 99);
-let randomNumber5 = getRandomNumber(10, 99);
+let randomNumber2 = getRandomNumber(1000, 9999);
+let randomNumber3 = getRandomNumber(100000, 999999);
+let randomNumber4 = getRandomNumber(10000000, 99999999);
+let randomNumber5 = getRandomNumber(1000000000, 9999999999);
 
 // let randomNumber1 = getRandomNumber(1, 1);
 // let randomNumber2 = getRandomNumber(1, 1);
 // let randomNumber3 = getRandomNumber(1, 1);
 // let randomNumber4 = getRandomNumber(1, 1);
 // let randomNumber5 = getRandomNumber(1, 1);
+
+let randomLetter1 = getRandomLetter(2);
+let randomLetter2 = getRandomLetter(4);
+let randomLetter3 = getRandomLetter(6);
+let randomLetter4 = getRandomLetter(8);
+let randomLetter5 = getRandomLetter(10);
+
+let randomValue1 = getRandomValue(2);
+let randomValue2 = getRandomValue(4);
+let randomValue3 = getRandomValue(6);
+let randomValue4 = getRandomValue(8);
+let randomValue5 = getRandomValue(10);
 
 // section Buttons Footer
 
@@ -121,12 +120,12 @@ sectionInput.append(sectionButtonsFooter);
 
 const buttonRepeat = document.createElement('button');
 buttonRepeat.className = 'btn block-button button-repeat';
-buttonRepeat.innerHTML = 'Repeat the sequence';
+buttonRepeat.innerText = 'Repeat the sequence';
 buttonRepeat.classList.add('hidden');
 
 const buttonNewGame = document.createElement('button');
 buttonNewGame.className = 'btn block-button button-new-game';
-buttonNewGame.innerHTML = 'New game';
+buttonNewGame.innerText = 'New game';
 buttonNewGame.classList.add('hidden');
 
 sectionButtonsFooter.append(buttonRepeat, buttonNewGame);
@@ -146,27 +145,52 @@ keyboardData1.forEach((row) => {
         const buttonKey = document.createElement('button');
         buttonKey.className = 'btn button-key';
         buttonKey.setAttribute('type', 'button');
-        buttonKey.innerHTML = key.text.en;
+        buttonKey.innerText = key.text.en;
         rows.append(buttonKey);
 
         buttonKey.addEventListener('click', () => {
-            textarea.innerHTML += buttonKey.innerText;
+            textarea.innerText += buttonKey.innerText;
 
-            if (textarea.innerHTML === textarea.placeholder) {
-                buttonRepeat.innerHTML = 'Next';
+            if (textarea.innerText === textarea.placeholder) {
+                buttonRepeat.innerText = 'Next';
                 buttonRepeat.removeAttribute('disabled', '');
                 buttonRepeat.classList.remove('disabled');
+
+                showMessageCorrect();
             }
+
+            // if (textarea.innerHTML !== textarea.placeholder) {
+            //     popup.classList.add('_active');
+            //     popupTitle.innerHTML = 'Incorrect!';
+            //     popupTitle.classList.add('_lose');
+            //     document.body.classList.add('_lock');
+
+            //     setTimeout(() => {
+            //         popup.classList.remove('_active');
+            //         document.body.classList.remove('_lock');
+            //         textarea.innerHTML = '';
+            //         textarea.placeholder = '';
+            //     }, 2000);
+            // }
         });
     });
 });
 
 const buttonsKey = keyboard.querySelectorAll('.button-key');
 
-// function getRandomNumber(min, max)
+disabledButtonsKey();
 
-function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+// let isBlocked = true;
+
+// document.addEventListener('keydown', function (event) {
+//     if (isBlocked) {
+//         event.preventDefault();
+//     }
+// });
+
+// Function to toggle blocking
+function toggleBlock() {
+    isBlocked = !isBlocked;
 }
 
 // popup Levels
@@ -179,7 +203,7 @@ function displayLevels() {
     frameSizesData.forEach((item, index) => {
         const popupLevelListItem = document.createElement('li');
         popupLevelListItem.className = 'btn popup-level__list-item';
-        popupLevelListItem.innerHTML = item.name;
+        popupLevelListItem.innerText = item.name;
         popupLevelList.append(popupLevelListItem);
     });
 };
@@ -203,7 +227,7 @@ popupContainer.append(popupContent);
 
 const popupTitle = document.createElement('p');
 popupTitle.className = 'popup__title';
-popupTitle.innerHTML = 'Game Over!!';
+popupTitle.innerText = 'Game Over!!';
 popupContent.append(popupTitle);
 
 const popupSubtitle = document.createElement('p');
@@ -213,7 +237,7 @@ popupContent.append(popupSubtitle);
 const buttonClosePopup = document.createElement('button');
 buttonClosePopup.className = 'btn popup__button button-x';
 buttonClosePopup.setAttribute('type', 'button');
-buttonClosePopup.innerHTML = 'x';
+buttonClosePopup.innerText = 'x';
 popupContent.append(buttonClosePopup);
 
 buttonClosePopup.addEventListener('click', () => {
@@ -225,17 +249,35 @@ buttonClosePopup.addEventListener('click', () => {
 
 buttonLevels.addEventListener('click', () => {
     popupLevelList.classList.toggle('_active');
-    document.body.classList.add('_lock');
+    // disabledButtonsKey();
+    // buttonStart.setAttribute('disabled', '');
+    // buttonStart.classList.add('disabled');
+    // document.body.classList.add('_lock');
 });
+
+// document.addEventListener('click', (e) => {
+//     // const click = e.composedPath().includes(popupLevelListItems);
+//     // if (!click) {
+//         popupLevelList.addEventListener("click", (e) => {
+//             popupLevelList.classList.remove('_active');
+//         });
+//     // }
+// });
 
 popupLevelListItems.forEach(level => {
     level.addEventListener("click", () => {
-        // resetGame();
-        if (level.innerHTML === 'Easy') {
+
+        // buttonStart.removeAttribute('disabled', '');
+        // buttonStart.classList.remove('disabled');
+
+        // document.body.classList.toggle('_lock');
+        // document.body.classList.add('_lock');
+        if (level.innerText === 'Easy') {
             buttonStart.classList.remove('hidden');
+
             currentLevel.innerText = `Easy level`;
 
-            keyboard.innerHTML = '';
+            keyboard.innerText = '';
 
             keyboardData1.forEach((row) => {
                 const rows = document.createElement('div');
@@ -246,15 +288,31 @@ popupLevelListItems.forEach(level => {
                     const buttonKey = document.createElement('button');
                     buttonKey.className = 'btn button-key';
                     buttonKey.setAttribute('type', 'button');
-                    buttonKey.innerHTML = key.text.en;
+                    buttonKey.innerText = key.text.en;
                     rows.append(buttonKey);
+
+                    buttonKey.addEventListener('click', () => {
+                        textarea.innerText += buttonKey.innerText;
+
+                        if (textarea.innerText === textarea.placeholder) {
+                            buttonRepeat.innerText = 'Next';
+                            buttonRepeat.removeAttribute('disabled', '');
+                            buttonRepeat.classList.remove('disabled');
+
+                            showMessageCorrect();
+                        }
+                    });
+
                 });
             });
+            validateOnlyNumbers();
+            // disabledButtonsKey();
+
         }
-        if (level.innerHTML === 'Medium') {
+        if (level.innerText === 'Medium') {
             buttonStart.classList.remove('hidden');
             currentLevel.innerText = `Medium level`;
-            keyboard.innerHTML = '';
+            keyboard.innerText = '';
 
             keyboardData2.forEach((row) => {
                 const rows = document.createElement('div');
@@ -265,15 +323,30 @@ popupLevelListItems.forEach(level => {
                     const buttonKey = document.createElement('button');
                     buttonKey.className = 'btn button-key';
                     buttonKey.setAttribute('type', 'button');
-                    buttonKey.innerHTML = key.text.en;
+                    buttonKey.innerText = key.text.en;
                     rows.append(buttonKey);
+
+                    buttonKey.addEventListener('click', () => {
+                        textarea.innerText += buttonKey.innerText;
+
+                        if (textarea.innerText === textarea.placeholder) {
+                            buttonRepeat.innerText = 'Next';
+                            buttonRepeat.removeAttribute('disabled', '');
+                            buttonRepeat.classList.remove('disabled');
+
+                            showMessageCorrect();
+                        }
+                    });
+
                 });
             });
+
+            // validateOnlyLetters();
         }
-        if (level.innerHTML === 'Hard') {
+        if (level.innerText === 'Hard') {
             buttonStart.classList.remove('hidden');
             currentLevel.innerText = `Hard level`;
-            keyboard.innerHTML = '';
+            keyboard.innerText = '';
 
             keyboardData.forEach((row) => {
                 const rows = document.createElement('div');
@@ -284,8 +357,21 @@ popupLevelListItems.forEach(level => {
                     const buttonKey = document.createElement('button');
                     buttonKey.className = 'btn button-key';
                     buttonKey.setAttribute('type', 'button');
-                    buttonKey.innerHTML = key.text.en;
+                    buttonKey.innerText = key.text.en;
                     rows.append(buttonKey);
+
+                    buttonKey.addEventListener('click', () => {
+                        textarea.innerText += buttonKey.innerText;
+
+                        if (textarea.innerHTML === textarea.placeholder) {
+                            buttonRepeat.innerText = 'Next';
+                            buttonRepeat.removeAttribute('disabled', '');
+                            buttonRepeat.classList.remove('disabled');
+
+                            showMessageCorrect();
+                        }
+                    });
+
                 });
             });
         }
@@ -301,9 +387,31 @@ buttonStart.addEventListener("click", () => {
     buttonRepeat.classList.remove('hidden');
     buttonNewGame.classList.remove('hidden');
 
-    setTimeout(function () {
+    // function showPlaceholder(elementId, placeholderText, duration) {
+    //     const element = document.getElementById(elementId);
+    //     element.placeholder = placeholderText;
+
+    //     setTimeout(() => {
+    //         element.placeholder = "";
+    //     }, duration);
+    // }
+
+    // showPlaceholder("myInput", "Enter your name...", 3000);
+
+    // let q = textarea.placeholder;
+    if (currentLevel.innerText === `Easy level`) {
         textarea.placeholder = randomNumber1;
-    }, 300);
+    }
+    if (currentLevel.innerText === `Medium level`) {
+        textarea.placeholder = randomLetter1;
+    }
+    if (currentLevel.innerText === `Hard level`) {
+        textarea.placeholder = randomValue1;
+    }
+
+    // setTimeout(function () {
+    //     q.classList.add('hidden');
+    // }, 2000);
 
     // Disable the button
     buttonLevels.setAttribute('disabled', '');
@@ -311,85 +419,150 @@ buttonStart.addEventListener("click", () => {
     buttonLevels.classList.add('disabled');
     buttonRepeat.removeAttribute('disabled', '');
     buttonRepeat.classList.remove('disabled');
+
+    buttonsKey.forEach((key) => {
+        key.removeAttribute('disabled', '');
+    });
+    // toggleBlock();
 });
+
+// if ((roundsCounterScore.innerText === '5') &&
+//     (textarea.innerHTML === randomNumber5)) {
+//     buttonRepeat.classList.add('hidden');
+//     roundsCounterScore.innerText = '';
+//     popup.classList.add('_active');
+//     document.body.classList.add('_lock');
+// }
 
 // button Repeat the sequence
 
 buttonRepeat.addEventListener('click', () => {
-    //  buttonRepeat.removeAttribute('disabled', '');
-        // buttonRepeat.classList.remove('disabled');
 
-    if (buttonRepeat.innerHTML === 'Repeat the sequence') {
+    if (buttonRepeat.innerText === 'Repeat the sequence') {
 
         buttonRepeat.setAttribute('disabled', '');
         buttonRepeat.classList.add('disabled');
 
-        textarea.innerHTML = '';
-        textarea.placeholder = randomNumber1;
-        if (roundsCounterScore.innerText === '2') {
-            textarea.placeholder = `${randomNumber1}${randomNumber2}`;
-        }
-        if (roundsCounterScore.innerText === '3') {
-            textarea.placeholder = `${randomNumber1}${randomNumber2}${randomNumber3}`;
-        }
-        if (roundsCounterScore.innerText === '4') {
-            textarea.placeholder = `${randomNumber1}${randomNumber2}${randomNumber3}${randomNumber4}`;
-        }
-        if (roundsCounterScore.innerText === '5') {
-            textarea.placeholder = `${randomNumber1}${randomNumber2}${randomNumber3}${randomNumber4}${randomNumber5}`;
+        textarea.innerText = '';
 
-            // if (textarea.innerHTML === `${randomNumber1}${randomNumber2}${randomNumber3}${randomNumber4}${randomNumber5}`) {
-            //     buttonRepeat.classList.add('hidden');
-            //     roundsCounterScore.innerText = '';
-            //     popup.classList.add('_active');
-            //     document.body.classList.add('_lock');
-            // }
+        if (currentLevel.innerText === `Easy level`) {
+
+            if (roundsCounterScore.innerText === '1') {
+                textarea.placeholder = randomNumber1;
+            }
+            if (roundsCounterScore.innerText === '2') {
+                textarea.placeholder = randomNumber2;
+            }
+            if (roundsCounterScore.innerText === '3') {
+                textarea.placeholder = randomNumber3;
+            }
+            if (roundsCounterScore.innerText === '4') {
+                textarea.placeholder = randomNumber4;
+            }
+            if (roundsCounterScore.innerText === '5') {
+                textarea.placeholder = randomNumber5;
+            }
+        }
+
+        if (currentLevel.innerText === `Medium level`) {
+
+            if (roundsCounterScore.innerText === '1') {
+                textarea.placeholder = randomLetter1;
+            }
+            if (roundsCounterScore.innerText === '2') {
+                textarea.placeholder = randomLetter2;
+            }
+            if (roundsCounterScore.innerText === '3') {
+                textarea.placeholder = randomLetter3;
+            }
+            if (roundsCounterScore.innerText === '4') {
+                textarea.placeholder = randomLetter4;
+            }
+            if (roundsCounterScore.innerText === '5') {
+                textarea.placeholder = randomLetter5;
+            }
+        }
+
+        if (currentLevel.innerText === `Hard level`) {
+            
+            if (roundsCounterScore.innerText === '1') {
+                textarea.placeholder = randomValue1;
+            }
+            if (roundsCounterScore.innerText === '2') {
+                textarea.placeholder = randomValue2;
+            }
+            if (roundsCounterScore.innerText === '3') {
+                textarea.placeholder = randomValue3;
+            }
+            if (roundsCounterScore.innerText === '4') {
+                textarea.placeholder = randomValue4;
+            }
+            if (roundsCounterScore.innerText === '5') {
+                textarea.placeholder = randomValue5;
+            }
         }
     }
 
-    if (buttonRepeat.innerHTML === 'Next') {
+    if (buttonRepeat.innerText === 'Next') {
         roundsCounterScore.innerText++;
+        buttonRepeat.innerText = 'Repeat the sequence';
 
-        // buttonRepeat.removeAttribute('disabled', '');
-        // buttonRepeat.classList.remove('disabled');
-
-        buttonRepeat.innerHTML = 'Repeat the sequence';
-
-        // buttonRepeat.removeAttribute('disabled', '');
-        // buttonRepeat.classList.remove('disabled');
-
-        if (buttonRepeat.innerHTML === 'Repeat the sequence') {
-
+        if (buttonRepeat.innerText === 'Repeat the sequence') {
             buttonRepeat.removeAttribute('disabled', '');
             buttonRepeat.classList.remove('disabled');
         }
 
-        textarea.innerHTML = '';
-        textarea.placeholder = `${randomNumber1}${randomNumber2}`;
-        if (roundsCounterScore.innerText === '3') {
-            textarea.placeholder = `${randomNumber1}${randomNumber2}${randomNumber3}`;
-        }
-        if (roundsCounterScore.innerText === '4') {
-            textarea.placeholder = `${randomNumber1}${randomNumber2}${randomNumber3}${randomNumber4}`;
-        }
-        if (roundsCounterScore.innerText === '5') {
-            textarea.placeholder = `${randomNumber1}${randomNumber2}${randomNumber3}${randomNumber4}${randomNumber5}`;
+        textarea.innerText = '';
 
-            // if (textarea.innerHTML === `${randomNumber1}${randomNumber2}${randomNumber3}${randomNumber4}${randomNumber5}`) {
-            //     buttonRepeat.classList.add('hidden');
-            //     roundsCounterScore.innerText = '';
-            //     popup.classList.add('_active');
-            //     document.body.classList.add('_lock');
-            // }
+        if (currentLevel.innerText === `Easy level`) {
+
+            if (roundsCounterScore.innerText === '2') {
+                textarea.placeholder = randomNumber2;
+            }
+            if (roundsCounterScore.innerText === '3') {
+                textarea.placeholder = randomNumber3;
+            }
+            if (roundsCounterScore.innerText === '4') {
+                textarea.placeholder = randomNumber4;
+            }
+            if (roundsCounterScore.innerText === '5') {
+                textarea.placeholder = randomNumber5;
+            }
+        }
+
+        if (currentLevel.innerText === `Medium level`) {
+
+            if (roundsCounterScore.innerText === '2') {
+                textarea.placeholder = randomLetter2;
+            }
+            if (roundsCounterScore.innerText === '3') {
+                textarea.placeholder = randomLetter3;
+            }
+            if (roundsCounterScore.innerText === '4') {
+                textarea.placeholder = randomLetter4;
+            }
+            if (roundsCounterScore.innerText === '5') {
+                textarea.placeholder = randomLetter5;
+            }
+        }
+
+        if (currentLevel.innerText === `Hard level`) {
+
+            if (roundsCounterScore.innerText === '2') {
+                textarea.placeholder = randomValue2;
+            }
+            if (roundsCounterScore.innerText === '3') {
+                textarea.placeholder = randomValue3;
+            }
+            if (roundsCounterScore.innerText === '4') {
+                textarea.placeholder = randomValue4;
+            }
+            if (roundsCounterScore.innerText === '5') {
+                textarea.placeholder = randomValue5;
+            }
         }
     }
 });
-
-// if ((roundsCounterScore.innerText === '5') &&
-//     (textarea.placeholder === 'randomNumber1 randomNumber2 randomNumber3 randomNumber4 randomNumber5')) {
-//         popup.classList.add('_active');
-//         document.body.classList.add('_lock');
-//     }
 
 // button New Game 
 
@@ -399,13 +572,44 @@ buttonNewGame.addEventListener("click", () => {
     buttonRepeat.classList.add('hidden');
     buttonNewGame.classList.add('hidden');
     textarea.placeholder = '';
-    textarea.innerHTML = '';
+    textarea.innerText = '';
     buttonLevels.removeAttribute('disabled', '');
     buttonLevels.classList.remove('disabled');
     buttonRepeat.removeAttribute('disabled', '');
     buttonRepeat.classList.remove('disabled');
+    disabledButtonsKey();
+
 });
 
+// function getRandomNumber(min, max)
+
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomLetter(length) {
+    let result = '';
+    const characters = 'abcdefghijklmnopqrstuvwxyz';
+
+    // Loop to generate characters for the specified length
+    for (let i = 0; i < length; i++) {
+        const randomInd = Math.floor(Math.random() * characters.length);
+        result += characters.charAt(randomInd);
+    }
+    return result;
+}
+
+function getRandomValue(length) {
+    let result = '';
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+
+    // Loop to generate characters for the specified length
+    for (let i = 0; i < length; i++) {
+        const randomInd = Math.floor(Math.random() * characters.length);
+        result += characters.charAt(randomInd);
+    }
+    return result;
+}
 
 function showGameOver() {
     const audioWin = new Audio();
@@ -416,6 +620,48 @@ function showGameOver() {
     setTimeout(() => {
         popup.classList.add('_active');
     }, 1000);
-    popupSubtitle.innerHTML = `Great!`;
+    popupSubtitle.innerText = `Great!`;
     document.body.classList.add('_lock');
 }
+
+function showMessageCorrect() {
+    popup.classList.add('_active');
+    popupTitle.innerText = 'Correct!';
+    popupTitle.classList.add('_win');
+    document.body.classList.add('_lock');
+
+    setTimeout(() => {
+        popup.classList.remove('_active');
+        document.body.classList.remove('_lock');
+    }, 2000);
+}
+
+function disabledButtonsKey() {
+    buttonsKey.forEach((key) => {
+        key.setAttribute('disabled', '');
+        key.classList.add('disabled');
+    });
+}
+
+function validateOnlyNumbers() {
+    textarea.addEventListener('input', (e) => {
+        const value = e.target.value;
+        const onlyNumbers = value.replace(/[^0-9]/g, '');
+
+        if (onlyNumbers !== value) {
+            e.target.value = onlyNumbers;
+        }
+    });
+}
+
+function validateOnlyLetters() {
+    textarea.addEventListener('input', function (e) {
+        this.value = this.value.replace(/[^a-zA-Z]/g, '');
+    });
+}
+
+// function validateValue(elem) {
+//     const value = elem.value;
+//     const numVal = value.replace(/[^\d\n]+/g, "");
+//     elem.value = numVal;
+// }
