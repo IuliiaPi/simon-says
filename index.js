@@ -14,7 +14,7 @@ pageContent.className = 'page__content';
 pageContainer.append(pageContent);
 
 const title = document.createElement('h1');
-title.innerText = 'Welcome to Simon Says';
+title.textContent = 'Welcome to Simon Says';
 title.className = 'title';
 pageContent.append(title);
 
@@ -26,11 +26,11 @@ pageContent.append(sectionButtonsHeader);
 
 const buttonLevels = document.createElement('button');
 buttonLevels.className = 'btn block-button button-level';
-buttonLevels.innerText = 'Levels';
+buttonLevels.textContent = 'Levels';
 
 const buttonStart = document.createElement('button');
 buttonStart.className = 'btn block-button button-start';
-buttonStart.innerText = 'Start';
+buttonStart.textContent = 'Start';
 
 sectionButtonsHeader.append(buttonLevels, buttonStart);
 
@@ -46,7 +46,7 @@ sectionInput.append(blockInfo);
 
 const currentLevel = document.createElement('div');
 currentLevel.setAttribute('class', 'current-level');
-currentLevel.innerText = `Easy level`;
+currentLevel.textContent = `Easy level`;
 
 const roundsCounter = document.createElement('div');
 roundsCounter.setAttribute('class', 'rounds-counter');
@@ -55,11 +55,11 @@ blockInfo.append(currentLevel, roundsCounter);
 
 const roundsCounterTitle = document.createElement('p');
 roundsCounterTitle.setAttribute('class', 'rounds-counter-title');
-roundsCounterTitle.innerText = `Round: `;
+roundsCounterTitle.textContent = `Round: `;
 
 const roundsCounterScore = document.createElement('p');
 roundsCounterScore.setAttribute('class', 'rounds-counter-score');
-roundsCounterScore.innerText = `1`;
+roundsCounterScore.textContent = `1`;
 roundsCounterScore.classList.add('hidden');
 
 roundsCounter.append(roundsCounterTitle, roundsCounterScore);
@@ -81,24 +81,17 @@ sectionInput.append(blockInput);
 const textarea = document.createElement('textarea');
 textarea.setAttribute('class', 'input-textarea');
 textarea.placeholder = '';
+textarea.maxLength = '2';
 blockInput.append(textarea);
 
 textarea.focus();
 // textarea.addEventListener('blur', () => textarea.focus());
-
-validateOnlyNumbers();
 
 let randomNumber1 = getRandomNumber(10, 99);
 let randomNumber2 = getRandomNumber(1000, 9999);
 let randomNumber3 = getRandomNumber(100000, 999999);
 let randomNumber4 = getRandomNumber(10000000, 99999999);
 let randomNumber5 = getRandomNumber(1000000000, 9999999999);
-
-// let randomNumber1 = getRandomNumber(1, 1);
-// let randomNumber2 = getRandomNumber(1, 1);
-// let randomNumber3 = getRandomNumber(1, 1);
-// let randomNumber4 = getRandomNumber(1, 1);
-// let randomNumber5 = getRandomNumber(1, 1);
 
 let randomLetter1 = getRandomLetter(2);
 let randomLetter2 = getRandomLetter(4);
@@ -120,12 +113,14 @@ sectionInput.append(sectionButtonsFooter);
 
 const buttonRepeat = document.createElement('button');
 buttonRepeat.className = 'btn block-button button-repeat';
-buttonRepeat.innerText = 'Repeat the sequence';
+buttonRepeat.textContent = 'Repeat the sequence';
 buttonRepeat.classList.add('hidden');
+buttonRepeat.setAttribute('disabled', '');
+buttonRepeat.classList.add('disabled');
 
 const buttonNewGame = document.createElement('button');
 buttonNewGame.className = 'btn block-button button-new-game';
-buttonNewGame.innerText = 'New game';
+buttonNewGame.textContent = 'New game';
 buttonNewGame.classList.add('hidden');
 
 sectionButtonsFooter.append(buttonRepeat, buttonNewGame);
@@ -145,33 +140,29 @@ keyboardData1.forEach((row) => {
         const buttonKey = document.createElement('button');
         buttonKey.className = 'btn button-key';
         buttonKey.setAttribute('type', 'button');
-        buttonKey.innerText = key.text.en;
+        buttonKey.textContent = key.text.en;
         rows.append(buttonKey);
 
         buttonKey.addEventListener('click', () => {
-            textarea.innerHTML += buttonKey.innerText;
+            textarea.textContent += buttonKey.textContent;
 
-            if (textarea.innerHTML === textarea.placeholder) {
-                buttonRepeat.innerText = 'Next';
+            if (textarea.textContent === textarea.placeholder) {
+                buttonRepeat.textContent = 'Next';
                 buttonRepeat.removeAttribute('disabled', '');
                 buttonRepeat.classList.remove('disabled');
-
                 showMessageCorrect();
             }
 
-            // if (textarea.innerHTML !== textarea.placeholder) {
-            //     popup.classList.add('_active');
-            //     popupTitle.innerHTML = 'Incorrect!';
-            //     popupTitle.classList.add('_lose');
-            //     document.body.classList.add('_lock');
+            if (textarea.textContent !== textarea.placeholder && textarea.textContent.length === textarea.placeholder.length) {
+                showMessageIncorrect();
+                // buttonRepeat.removeAttribute('disabled', '');
+                // buttonRepeat.classList.remove('disabled');
+            }
 
-            //     setTimeout(() => {
-            //         popup.classList.remove('_active');
-            //         document.body.classList.remove('_lock');
-            //         textarea.innerHTML = '';
-            //         textarea.placeholder = '';
-            //     }, 2000);
-            // }
+            if (textarea.textContent === textarea.placeholder && roundsCounterScore.innerText === '5') {
+                showGameOver();
+            }
+
         });
     });
 });
@@ -180,13 +171,13 @@ const buttonsKey = keyboard.querySelectorAll('.button-key');
 
 disabledButtonsKey();
 
-// let isBlocked = true;
+let isBlocked = true;
 
-// document.addEventListener('keydown', function (event) {
-//     if (isBlocked) {
-//         event.preventDefault();
-//     }
-// });
+document.addEventListener('keydown', function (event) {
+    if (isBlocked) {
+        event.preventDefault();
+    }
+});
 
 // Function to toggle blocking
 function toggleBlock() {
@@ -203,7 +194,7 @@ function displayLevels() {
     frameSizesData.forEach((item, index) => {
         const popupLevelListItem = document.createElement('li');
         popupLevelListItem.className = 'btn popup-level__list-item';
-        popupLevelListItem.innerText = item.name;
+        popupLevelListItem.textContent = item.name;
         popupLevelList.append(popupLevelListItem);
     });
 };
@@ -227,7 +218,7 @@ popupContainer.append(popupContent);
 
 const popupTitle = document.createElement('p');
 popupTitle.className = 'popup__title';
-popupTitle.innerText = 'Game Over!!';
+popupTitle.textContent = 'Game Over!!';
 popupContent.append(popupTitle);
 
 const popupSubtitle = document.createElement('p');
@@ -237,21 +228,33 @@ popupContent.append(popupSubtitle);
 const buttonClosePopup = document.createElement('button');
 buttonClosePopup.className = 'btn popup__button button-x';
 buttonClosePopup.setAttribute('type', 'button');
-buttonClosePopup.innerText = 'x';
+buttonClosePopup.textContent = 'x';
 popupContent.append(buttonClosePopup);
 
+// button Close Popup
+
 buttonClosePopup.addEventListener('click', () => {
+    textarea.textContent = '';
+    textarea.classList.remove('_correct');
+    textarea.placeholder = '';
     popup.classList.remove('_active');
     document.body.classList.remove('_lock');
-});
+    buttonRepeat.classList.add('hidden');
+    roundsCounterScore.textContent = '';
+    buttonLevels.removeAttribute('disabled', '');
+    buttonLevels.classList.remove('disabled');
+    buttonStart.classList.remove('hidden');
+})
 
 // button Levels 
 
 buttonLevels.addEventListener('click', () => {
-    popupLevelList.classList.toggle('_active');
     // disabledButtonsKey();
+    popupLevelList.classList.toggle('_active');
+    
     // buttonStart.setAttribute('disabled', '');
     // buttonStart.classList.add('disabled');
+    // buttonStart.classList.add('hidden');
     // document.body.classList.add('_lock');
 });
 
@@ -266,19 +269,11 @@ buttonLevels.addEventListener('click', () => {
 
 popupLevelListItems.forEach(level => {
     level.addEventListener("click", () => {
-
-        // buttonStart.removeAttribute('disabled', '');
-        // buttonStart.classList.remove('disabled');
-
-        // document.body.classList.toggle('_lock');
-        // document.body.classList.add('_lock');
-        if (level.innerText === 'Easy') {
-            buttonStart.classList.remove('hidden');
-
-            currentLevel.innerText = `Easy level`;
-
-            keyboard.innerText = '';
-
+       
+        if (level.textContent === 'Easy') {
+            currentLevel.textContent = `Easy level`;
+            keyboard.textContent = '';
+            
             keyboardData1.forEach((row) => {
                 const rows = document.createElement('div');
                 rows.setAttribute('class', 'row');
@@ -288,31 +283,41 @@ popupLevelListItems.forEach(level => {
                     const buttonKey = document.createElement('button');
                     buttonKey.className = 'btn button-key';
                     buttonKey.setAttribute('type', 'button');
-                    buttonKey.innerText = key.text.en;
+                    buttonKey.textContent = key.text.en;
                     rows.append(buttonKey);
 
                     buttonKey.addEventListener('click', () => {
-                        textarea.innerHTML += buttonKey.innerText;
+                        textarea.textContent += buttonKey.textContent;
 
-                        if (textarea.innerHTML === textarea.placeholder) {
-                            buttonRepeat.innerText = 'Next';
+                        if (textarea.textContent === textarea.placeholder) {
+                            buttonRepeat.textContent = 'Next';
                             buttonRepeat.removeAttribute('disabled', '');
                             buttonRepeat.classList.remove('disabled');
-
                             showMessageCorrect();
                         }
+
+                        if (textarea.textContent !== textarea.placeholder && textarea.textContent.length === textarea.placeholder.length) {
+                            showMessageIncorrect();
+                            // buttonRepeat.removeAttribute('disabled', '');
+                            // buttonRepeat.classList.remove('disabled');
+                        }
+
+                        if (textarea.textContent === textarea.placeholder && roundsCounterScore.innerText === '5') {
+                            showGameOver();
+                        }
+
                     });
-
+                    
                 });
+                
             });
-            validateOnlyNumbers();
-            // disabledButtonsKey();
-
+            validateOnlyNumbers();            
         }
-        if (level.innerText === 'Medium') {
+        
+        if (level.textContent === 'Medium') {
             buttonStart.classList.remove('hidden');
-            currentLevel.innerText = `Medium level`;
-            keyboard.innerText = '';
+            currentLevel.textContent = `Medium level`;
+            keyboard.textContent = '';
 
             keyboardData2.forEach((row) => {
                 const rows = document.createElement('div');
@@ -323,30 +328,38 @@ popupLevelListItems.forEach(level => {
                     const buttonKey = document.createElement('button');
                     buttonKey.className = 'btn button-key';
                     buttonKey.setAttribute('type', 'button');
-                    buttonKey.innerText = key.text.en;
+                    buttonKey.textContent = key.text.en;
                     rows.append(buttonKey);
 
                     buttonKey.addEventListener('click', () => {
-                        textarea.innerHTML += buttonKey.innerText;
+                        textarea.textContent += buttonKey.textContent;
 
-                        if (textarea.innerHTML === textarea.placeholder) {
-                            buttonRepeat.innerText = 'Next';
+                        if (textarea.textContent === textarea.placeholder) {
+                            buttonRepeat.textContent = 'Next';
                             buttonRepeat.removeAttribute('disabled', '');
                             buttonRepeat.classList.remove('disabled');
-
                             showMessageCorrect();
+                        }
+                        if (textarea.textContent !== textarea.placeholder && textarea.textContent.length === textarea.placeholder.length) {
+                            showMessageIncorrect();
+                            // buttonRepeat.removeAttribute('disabled', '');
+                            // buttonRepeat.classList.remove('disabled');
+                        }
+
+                        if (textarea.textContent === textarea.placeholder && roundsCounterScore.innerText === '5') {
+                            showGameOver();
                         }
                     });
 
                 });
             });
 
-            // validateOnlyLetters();
+            validateOnlyLetters();
         }
-        if (level.innerText === 'Hard') {
+        if (level.textContent === 'Hard') {
             buttonStart.classList.remove('hidden');
-            currentLevel.innerText = `Hard level`;
-            keyboard.innerText = '';
+            currentLevel.textContent = `Hard level`;
+            keyboard.textContent = '';
 
             keyboardData.forEach((row) => {
                 const rows = document.createElement('div');
@@ -357,35 +370,53 @@ popupLevelListItems.forEach(level => {
                     const buttonKey = document.createElement('button');
                     buttonKey.className = 'btn button-key';
                     buttonKey.setAttribute('type', 'button');
-                    buttonKey.innerText = key.text.en;
+                    buttonKey.textContent = key.text.en;
                     rows.append(buttonKey);
 
                     buttonKey.addEventListener('click', () => {
-                        textarea.innerHTML += buttonKey.innerText;
+                        textarea.textContent += buttonKey.textContent;
 
-                        if (textarea.innerHTML === textarea.placeholder) {
-                            buttonRepeat.innerText = 'Next';
+                        if (textarea.textContent === textarea.placeholder) {
+                            buttonRepeat.textContent = 'Next';
                             buttonRepeat.removeAttribute('disabled', '');
                             buttonRepeat.classList.remove('disabled');
 
                             showMessageCorrect();
+                        }
+                        if (textarea.textContent !== textarea.placeholder && textarea.textContent.length === textarea.placeholder.length) {
+                            showMessageIncorrect();
+                            // buttonRepeat.removeAttribute('disabled', '');
+                            // buttonRepeat.classList.remove('disabled');
+                        }
+
+                        if (textarea.textContent === textarea.placeholder && roundsCounterScore.innerText === '5') {
+                            showGameOver();
                         }
                     });
 
                 });
             });
         }
+       
     });
+    
 });
 
 // button Start 
 
 buttonStart.addEventListener("click", () => {
     buttonStart.classList.add('hidden');
+    buttonLevels.setAttribute('disabled', '');
+    buttonLevels.classList.add('disabled');
     roundsCounterScore.classList.remove('hidden');
-    roundsCounterScore.innerText = ` 1`;
+    roundsCounterScore.textContent = ` 1`;
     buttonRepeat.classList.remove('hidden');
+    buttonRepeat.removeAttribute('disabled', '');
+    buttonRepeat.classList.remove('disabled');
     buttonNewGame.classList.remove('hidden');
+    undisabledButtonsKey();
+    toggleBlock();
+    popupLevelList.classList.remove('_active');
 
     // function showPlaceholder(elementId, placeholderText, duration) {
     //     const element = document.getElementById(elementId);
@@ -399,166 +430,164 @@ buttonStart.addEventListener("click", () => {
     // showPlaceholder("myInput", "Enter your name...", 3000);
 
     // let q = textarea.placeholder;
-    if (currentLevel.innerText === `Easy level`) {
+    if (currentLevel.textContent === `Easy level`) {
+        // setTimeout(function () {
         textarea.placeholder = randomNumber1;
+        validateOnlyNumbers();
+        // }, 2000); 
     }
-    if (currentLevel.innerText === `Medium level`) {
+    if (currentLevel.textContent === `Medium level`) {
         textarea.placeholder = randomLetter1;
+        validateOnlyLetters();
     }
-    if (currentLevel.innerText === `Hard level`) {
+    if (currentLevel.textContent === `Hard level`) {
         textarea.placeholder = randomValue1;
     }
 
     // setTimeout(function () {
     //     q.classList.add('hidden');
-    // }, 2000);
-
-    // Disable the button
-    buttonLevels.setAttribute('disabled', '');
-    // buttonLevels.disabled = true;
-    buttonLevels.classList.add('disabled');
-    buttonRepeat.removeAttribute('disabled', '');
-    buttonRepeat.classList.remove('disabled');
-
-    buttonsKey.forEach((key) => {
-        key.removeAttribute('disabled', '');
-    });
-    // toggleBlock();
+    // }, 2000);  
 });
-
-// if ((roundsCounterScore.innerText === '5') &&
-//     (textarea.innerHTML === randomNumber5)) {
-//     buttonRepeat.classList.add('hidden');
-//     roundsCounterScore.innerText = '';
-//     popup.classList.add('_active');
-//     document.body.classList.add('_lock');
-// }
 
 // button Repeat the sequence
 
 buttonRepeat.addEventListener('click', () => {
 
-    if (buttonRepeat.innerText === 'Repeat the sequence') {
+    if (buttonRepeat.textContent === 'Repeat the sequence') {
 
         buttonRepeat.setAttribute('disabled', '');
         buttonRepeat.classList.add('disabled');
+        textarea.textContent = '';
+        textarea.classList.remove('_incorrect');
+        undisabledButtonsKey();
 
-        textarea.innerText = '';
+        if (currentLevel.textContent === `Easy level`) {
 
-        if (currentLevel.innerText === `Easy level`) {
-
-            if (roundsCounterScore.innerText === '1') {
+            if (roundsCounterScore.textContent === '1') {
                 textarea.placeholder = randomNumber1;
             }
-            if (roundsCounterScore.innerText === '2') {
+            if (roundsCounterScore.textContent === '2') {
                 textarea.placeholder = randomNumber2;
             }
-            if (roundsCounterScore.innerText === '3') {
+            if (roundsCounterScore.textContent === '3') {
                 textarea.placeholder = randomNumber3;
             }
-            if (roundsCounterScore.innerText === '4') {
+            if (roundsCounterScore.textContent === '4') {
                 textarea.placeholder = randomNumber4;
             }
-            if (roundsCounterScore.innerText === '5') {
+            if (roundsCounterScore.textContent === '5') {
                 textarea.placeholder = randomNumber5;
             }
         }
 
-        if (currentLevel.innerText === `Medium level`) {
+        if (currentLevel.textContent === `Medium level`) {
 
-            if (roundsCounterScore.innerText === '1') {
+            if (roundsCounterScore.textContent === '1') {
                 textarea.placeholder = randomLetter1;
             }
-            if (roundsCounterScore.innerText === '2') {
+            if (roundsCounterScore.textContent === '2') {
                 textarea.placeholder = randomLetter2;
             }
-            if (roundsCounterScore.innerText === '3') {
+            if (roundsCounterScore.textContent === '3') {
                 textarea.placeholder = randomLetter3;
             }
-            if (roundsCounterScore.innerText === '4') {
+            if (roundsCounterScore.textContent === '4') {
                 textarea.placeholder = randomLetter4;
             }
-            if (roundsCounterScore.innerText === '5') {
+            if (roundsCounterScore.textContent === '5') {
                 textarea.placeholder = randomLetter5;
             }
         }
 
-        if (currentLevel.innerText === `Hard level`) {
-            
-            if (roundsCounterScore.innerText === '1') {
+        if (currentLevel.textContent === `Hard level`) {
+
+            if (roundsCounterScore.textContent === '1') {
                 textarea.placeholder = randomValue1;
             }
-            if (roundsCounterScore.innerText === '2') {
+            if (roundsCounterScore.textContent === '2') {
                 textarea.placeholder = randomValue2;
             }
-            if (roundsCounterScore.innerText === '3') {
+            if (roundsCounterScore.textContent === '3') {
                 textarea.placeholder = randomValue3;
             }
-            if (roundsCounterScore.innerText === '4') {
+            if (roundsCounterScore.textContent === '4') {
                 textarea.placeholder = randomValue4;
             }
-            if (roundsCounterScore.innerText === '5') {
+            if (roundsCounterScore.textContent === '5') {
                 textarea.placeholder = randomValue5;
             }
         }
     }
 
-    if (buttonRepeat.innerText === 'Next') {
-        roundsCounterScore.innerText++;
-        buttonRepeat.innerText = 'Repeat the sequence';
+    if (buttonRepeat.textContent === 'Next') {
+        roundsCounterScore.textContent++;
+        buttonRepeat.textContent = 'Repeat the sequence';
+        textarea.textContent = '';
+        textarea.classList.remove('_correct');
+        undisabledButtonsKey();
 
-        if (buttonRepeat.innerText === 'Repeat the sequence') {
+        if (buttonRepeat.textContent === 'Repeat the sequence') {
             buttonRepeat.removeAttribute('disabled', '');
             buttonRepeat.classList.remove('disabled');
         }
 
-        textarea.innerText = '';
+        if (currentLevel.textContent === `Easy level`) {
 
-        if (currentLevel.innerText === `Easy level`) {
-
-            if (roundsCounterScore.innerText === '2') {
+            if (roundsCounterScore.textContent === '2') {
                 textarea.placeholder = randomNumber2;
+                textarea.maxLength = '4';
             }
-            if (roundsCounterScore.innerText === '3') {
+            if (roundsCounterScore.textContent === '3') {
                 textarea.placeholder = randomNumber3;
+                textarea.maxLength = '6';
             }
-            if (roundsCounterScore.innerText === '4') {
+            if (roundsCounterScore.textContent === '4') {
                 textarea.placeholder = randomNumber4;
+                textarea.maxLength = '8';
             }
-            if (roundsCounterScore.innerText === '5') {
+            if (roundsCounterScore.textContent === '5') {
                 textarea.placeholder = randomNumber5;
+                textarea.maxLength = '10';
             }
         }
 
-        if (currentLevel.innerText === `Medium level`) {
+        if (currentLevel.textContent === `Medium level`) {
 
-            if (roundsCounterScore.innerText === '2') {
+            if (roundsCounterScore.textContent === '2') {
                 textarea.placeholder = randomLetter2;
+                textarea.maxLength = '4';
             }
-            if (roundsCounterScore.innerText === '3') {
+            if (roundsCounterScore.textContent === '3') {
                 textarea.placeholder = randomLetter3;
+                textarea.maxLength = '6';
             }
-            if (roundsCounterScore.innerText === '4') {
+            if (roundsCounterScore.textContent === '4') {
                 textarea.placeholder = randomLetter4;
+                textarea.maxLength = '8';
             }
-            if (roundsCounterScore.innerText === '5') {
+            if (roundsCounterScore.textContent === '5') {
                 textarea.placeholder = randomLetter5;
+                textarea.maxLength = '10';
             }
         }
 
-        if (currentLevel.innerText === `Hard level`) {
+        if (currentLevel.textContent === `Hard level`) {
 
-            if (roundsCounterScore.innerText === '2') {
+            if (roundsCounterScore.textContent === '2') {
                 textarea.placeholder = randomValue2;
+                textarea.maxLength = '4';
             }
-            if (roundsCounterScore.innerText === '3') {
+            if (roundsCounterScore.textContent === '3') {
                 textarea.placeholder = randomValue3;
+                textarea.maxLength = '6';
             }
-            if (roundsCounterScore.innerText === '4') {
+            if (roundsCounterScore.textContent === '4') {
                 textarea.placeholder = randomValue4;
+                textarea.maxLength = '8';
             }
-            if (roundsCounterScore.innerText === '5') {
+            if (roundsCounterScore.textContent === '5') {
                 textarea.placeholder = randomValue5;
+                textarea.maxLength = '10';
             }
         }
     }
@@ -572,13 +601,32 @@ buttonNewGame.addEventListener("click", () => {
     buttonRepeat.classList.add('hidden');
     buttonNewGame.classList.add('hidden');
     textarea.placeholder = '';
-    textarea.innerText = '';
+    textarea.textContent = '';
+    textarea.classList.remove('_correct');
+    textarea.classList.remove('_incorrect');
     buttonLevels.removeAttribute('disabled', '');
     buttonLevels.classList.remove('disabled');
     buttonRepeat.removeAttribute('disabled', '');
     buttonRepeat.classList.remove('disabled');
     disabledButtonsKey();
 
+    randomNumber1 = getRandomNumber(10, 99);
+    randomNumber2 = getRandomNumber(1000, 9999);
+    randomNumber3 = getRandomNumber(100000, 999999);
+    randomNumber4 = getRandomNumber(10000000, 99999999);
+    randomNumber5 = getRandomNumber(1000000000, 9999999999);
+
+    randomLetter2 = getRandomLetter(4);
+    randomLetter3 = getRandomLetter(6);
+    randomLetter4 = getRandomLetter(8);
+    randomLetter5 = getRandomLetter(10);
+    randomLetter1 = getRandomLetter(2);
+
+    randomValue1 = getRandomValue(2);
+    randomValue2 = getRandomValue(4);
+    randomValue3 = getRandomValue(6);
+    randomValue4 = getRandomValue(8);
+    randomValue5 = getRandomValue(10);
 });
 
 // function getRandomNumber(min, max)
@@ -586,6 +634,8 @@ buttonNewGame.addEventListener("click", () => {
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+// function getRandomLetter(length)
 
 function getRandomLetter(length) {
     let result = '';
@@ -599,6 +649,8 @@ function getRandomLetter(length) {
     return result;
 }
 
+// function getRandomValue(length)
+
 function getRandomValue(length) {
     let result = '';
     const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -611,30 +663,42 @@ function getRandomValue(length) {
     return result;
 }
 
-function showGameOver() {
-    const audioWin = new Audio();
-    audioWin.src = './assets/audio/win-sound.wav';
-    audioWin.volume = volume;
-    audioWin.play();
+// function showGameOver
 
+function showGameOver() {
+    // const audioWin = new Audio();
+    // audioWin.src = './assets/audio/win-sound.wav';
+    // audioWin.volume = volume;
+    // audioWin.play();
+
+    disabledButtonsKey();
     setTimeout(() => {
         popup.classList.add('_active');
-    }, 1000);
-    popupSubtitle.innerText = `Great!`;
+    }, 500);
+    popupTitle.classList.add('_win');
+    popupSubtitle.textContent = `Great job!`;
     document.body.classList.add('_lock');
 }
+
+// function showMessageCorrect
 
 function showMessageCorrect() {
-    popup.classList.add('_active');
-    popupTitle.innerText = 'Correct!';
-    popupTitle.classList.add('_win');
-    document.body.classList.add('_lock');
-
+    disabledButtonsKey();
     setTimeout(() => {
-        popup.classList.remove('_active');
-        document.body.classList.remove('_lock');
-    }, 2000);
+        textarea.textContent = 'Correct!';
+        textarea.classList.add('_correct');
+    }, 300);
 }
+
+function showMessageIncorrect() {
+    disabledButtonsKey();
+    setTimeout(() => {
+        textarea.textContent = 'Incorrect!';
+        textarea.classList.add('_incorrect');
+    }, 100);
+}
+
+// function disabledButtonsKey
 
 function disabledButtonsKey() {
     buttonsKey.forEach((key) => {
@@ -642,6 +706,14 @@ function disabledButtonsKey() {
         key.classList.add('disabled');
     });
 }
+
+function undisabledButtonsKey() {
+    buttonsKey.forEach((key) => {
+        key.removeAttribute('disabled', '');
+    });
+}
+
+// function validateOnlyNumbers
 
 function validateOnlyNumbers() {
     textarea.addEventListener('input', (e) => {

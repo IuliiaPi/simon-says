@@ -26,24 +26,37 @@ li {
     list-style: none;
 }
 
-img {
-    vertical-align: top;
-}
-
 html {
     scroll-behavior: smooth;
 }
 
 :root {
     --main-color: #545454;
+    --main-background-color: #ffffff;
+
+    --button-color: #545454;
+    --button-background-color: rgb(173, 184, 180);
+    --button-border-color: rgb(202, 202, 201);
+    --button-border-bottom-color: black;
+    --button-hover-border-bottom-color: rgb(12, 150, 7);
+    --button-active-color: rgb(27, 81, 27);
+
     --input-border-color: lightgray;
-    --bg-keyboard: rgb(34, 118, 171);
-    --bg-button: rgba(255, 255, 255, 0.2);
-    --button-color: azure;
-    --button-border-color: black;
-    --bg-button-dark: rgba(0, 0, 0, 0.25);
-    --button-hover: rgb(182, 182, 97);
-    --button-active: rgb(182, 182, 97);
+    --input-color: rgb(77, 120, 166);
+    --input-correct-color: rgb(13, 135, 27);
+    --input-correct-border-color: rgb(15, 162, 59);
+    --input-incorrect-color: rgb(200, 85, 53);
+    --input-incorrect-border-color: rgb(206, 62, 33);
+
+    --rounds-counter-score-color: rgb(69, 130, 196);;
+  
+    --keyboard-background-color: rgb(107, 138, 164);
+    --keyboard-border-color: rgb(202, 202, 201);
+    --button-key-color: rgb(62, 80, 111);
+    --button-key-background-color: rgb(199, 213, 224);
+    --button-key-border-color: rgb(202, 202, 201);
+
+   
 }
 
 .btn,
@@ -70,10 +83,6 @@ html {
     overflow: hidden;
 }
 
-/* ._lock {
-    overflow: hidden;
-} */
-
 /* .disabled {
     pointer-events: none;
 } */
@@ -89,7 +98,6 @@ html {
 
 html,
 .page {
-    /* position: relative; */
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
@@ -104,7 +112,7 @@ html,
     gap: 0px;
 
     color: var(--main-color);
-    background-color: var(--bg-main-color);
+    background-color: var(--main-background-color);
 }
 
 .page__container {
@@ -137,10 +145,11 @@ html,
     width: 150px;
     height: 50px;
     font-size: 20px;
-    background-color: rgb(173, 184, 180);
-    border: solid 2px rgb(202, 202, 201);
-    border-bottom: 2px solid black;
+    background-color: var(--button-background-color);
+    border: solid 2px var(--button-border-color);
+    border-bottom: 2px solid var(--button-border-bottom-color);
     border-radius: 10px;
+    /* color: var(--button-color); */
     transition: all 0.3s ease;
 }
 
@@ -148,23 +157,23 @@ html,
 
     .block-button:hover {
         cursor: pointer;
-        border-bottom: 2px solid rgb(12, 150, 7);
+        border-bottom: 2px solid var(--button-hover-border-bottom-color);
     }
 
     .block-button:disabled:hover {
         cursor: not-allowed;
-        border-bottom: 2px solid black;
+        border-bottom: 2px solid var(--button-border-bottom-color);
     }
 }
 
 .block-button:active {
-    color: rgb(27, 81, 27);
-    border-bottom: 2px solid black;
+    color: var(--button-active-color);
+    border-bottom: 2px solid var(--button-border-bottom-color);
 }
 
 .block-button:disabled:active {
-    /* color: var(--main-color); */
-    border-bottom: 2px solid black;
+    color: var(--main-color);
+    border-bottom: 2px solid var(--button-border-bottom-color);
 }
 
 /* popup Levels  */
@@ -211,11 +220,11 @@ html,
     opacity: 1;
 }
 
+/* section-input */
+
 .section-input {
-    /* padding: 20px; */
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     justify-content: center;
     gap: 15px;
 }
@@ -236,7 +245,8 @@ html,
 
 .rounds-counter-score {
     font-weight: 600;
-    color: rgb(69, 130, 196);
+    color: var(--rounds-counter-score-color);
+    transition: all 0.3s ease;
 }
 
 .block-input {
@@ -255,7 +265,22 @@ html,
     letter-spacing: 11px;
     border: 1px solid var(--input-border-color);
     border-radius: 3px;
-    color: rgb(77, 120, 166);
+    color: var(--input-color);
+    transition: all 0.6s ease;
+}
+
+.input-textarea._correct {
+    text-align: center;
+    letter-spacing: 1px;
+    border: 1px solid var(--input-correct-border-color);
+    color: var(--input-correct-color);
+}
+
+.input-textarea._incorrect {
+    text-align: center;
+    letter-spacing: 1px;
+    border: 1px solid var(--input-incorrect-border-color);
+    color: var(--input-incorrect-color);
 }
 
 /* keyboard */
@@ -267,8 +292,8 @@ html,
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background-color: rgb(107, 138, 164);
-    border: solid 2px rgb(202, 202, 201);
+    background-color: var(--keyboard-background-color);
+    border: solid 2px var(--keyboard-border-color);
     border-radius: 10px;
 }
 
@@ -284,9 +309,9 @@ html,
     height: 50px;
     width: 50px;
     font-size: 26px;
-    color: rgb(62, 80, 111);
-    background-color: rgb(199, 213, 224);
-    border: solid 2px rgb(202, 202, 201);
+    color: var(--button-key-color);
+    background-color: var(--button-key-background-color);
+    border: solid 2px var(--button-key-border-color);
     border-radius: 10px;
     transition: all 0.3s ease;
 }
@@ -332,10 +357,9 @@ html,
 
 .popup__container {
     position: relative;
-    /* width: 100%; */
+    width: 100%;
     max-width: 300px;
     min-width: 250px;
-    /* min-height: 150px; */
     margin: 20px;
     padding: 35px 30px;
     background-color: rgb(217, 224, 229);
@@ -345,20 +369,16 @@ html,
 
 .popup__content {
     display: flex;
-    /* flex-direction: column; */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* gap: 30px; */
+    gap: 30px;
 }
 
 .popup__title._win {
     color: rgb(4, 151, 4);
     font-size: 32px;
     line-height: 200%;
-}
-
-.popup__title._lose {
-    color: rgb(248, 97, 97);
 }
 
 .popup__subtitle {
@@ -378,6 +398,7 @@ html,
     border: solid 2px rgb(202, 202, 201);
     border-radius: 10px;
     color: rgb(28, 73, 73);
+    transition: all 0.3s ease;
 }
 
 @media (hover: hover) {
