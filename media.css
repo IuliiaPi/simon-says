@@ -11,6 +11,35 @@
 
 }
 
+@media screen and (max-width: 640px) {
+
+    .keyboard {
+        padding: 5px;
+        gap: 5px;
+    }
+
+    .row {
+        gap: 5px;
+    }
+
+    .button-key {
+        height: 45px;
+        width: 45px;
+        font-size: 25px;
+    }
+
+}
+
+@media screen and (max-width: 530px) {
+
+    .button-key {
+        height: 50px;
+        width: 50px;
+        font-size: 26px;
+    }
+
+}
+
 @media screen and (max-width: 380px) {
 
     .page__container {
@@ -27,7 +56,7 @@
     }
 
     .input-textarea {
-        padding: 10px;   
+        padding: 10px;
         font-size: 50px;
     }
 
